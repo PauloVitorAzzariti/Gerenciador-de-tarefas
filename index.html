@@ -431,54 +431,29 @@
   </div>
 
   <script>
-const API_URL = "http://localhost:3000/tasks";
-
-// ---------- Utilidades ----------
 const $ = (sel, el=document) => el.querySelector(sel);
 const $$ = (sel, el=document) => Array.from(el.querySelectorAll(sel));
 
-function addDays(n){ const d = new Date(); d.setDate(d.getDate()+n); return d.toISOString().slice(0,10); }
-
-// ---------- Estado ----------
 let state = { tasks: [] };
 
-// ---------- API ----------
-async function loadTasks() {
-  const res = await fetch(API_URL);
-  return await res.json();
+// ---------- Armazenamento local ----------
+function loadTasks() {
+  return JSON.parse(localStorage.getItem('tasks') || '[]');
 }
 
-async function saveTask(task) {
-  const res = await fetch(API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(task),
-  });
-  return await res.json();
-}
-
-async function updateTask(id, changes) {
-  const res = await fetch(`${API_URL}/${id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(changes),
-  });
-  return await res.json();
-}
-
-async function deleteTask(id) {
-  await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+function saveTasks(tasks) {
+  localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
 // ---------- Inicialização ----------
-async function init() {
-  state.tasks = await loadTasks();
+function init() {
+  state.tasks = loadTasks();
   render();
   bindUI();
 }
 
 // ---------- Renderização ----------
-function render(){
+function render() {
   const q = $('#search').value.trim().toLowerCase();
   const pf = $('#priorityFilter').value;
   const dueF = $('#dueFilter').value;
@@ -517,6 +492,7 @@ function render(){
   $('#stat-done').textContent = state.tasks.filter(t=>t.status==='done').length;
 }
 
+// ---------- Criar/editar/excluir ----------
 function createCard(t){
   const el = document.createElement('article');
   el.className = 'card';
@@ -538,13 +514,13 @@ function createCard(t){
       </div>
     </div>`;
 
-  el.addEventListener("click", async e=>{
+  el.addEventListener("click", e=>{
     const btn = e.target.closest("button");
     if(!btn) return;
     const a = btn.dataset.action;
-    if(a==="done"){ await updateTask(t.id,{status:"done"}); state.tasks=await loadTasks(); render(); }
+    if(a==="done"){ t.status="done"; saveAndRender(); }
     if(a==="edit"){ openModal(t); }
-    if(a==="del"){ if(confirm("Excluir esta tarefa?")){ await deleteTask(t.id); state.tasks=await loadTasks(); render(); } }
+    if(a==="del"){ if(confirm("Excluir esta tarefa?")){ state.tasks = state.tasks.filter(x=>x.id!==t.id); saveAndRender(); } }
   });
 
   el.addEventListener("dragstart", e=>{ e.dataTransfer.setData("id", t.id); el.style.opacity=.6; });
@@ -552,10 +528,10 @@ function createCard(t){
   return el;
 }
 
-function labelPriority(p){ return p==='alta'?'Alta':p==='baixa'?'Baixa':'Média'; }
-function priorityClass(p){ return p==='alta'?'danger':p==='baixa'?'success':'warn'; }
-function dueTagClass(d){ const t=new Date().toISOString().slice(0,10); if(!d)return''; if(d<t)return'danger'; if(d===t)return'warn'; return'success'; }
-function formatDate(d){ const [y,m,dd]=d.split('-'); return `${dd}/${m}/${y}`; }
+function saveAndRender(){
+  saveTasks(state.tasks);
+  render();
+}
 
 // ---------- Modal ----------
 function openModal(task=null){
@@ -574,10 +550,11 @@ function closeModal(){ $('#taskModal').classList.remove('open'); }
 $('#addTaskBtn').addEventListener('click', ()=> openModal());
 $('#cancelModal').addEventListener('click', closeModal);
 
-$('#taskForm').addEventListener('submit', async e=>{
+$('#taskForm').addEventListener('submit', e=>{
   e.preventDefault();
   const id = $('#taskId').value;
   const payload = {
+    id: id || Date.now().toString(),
     title: $('#title').value.trim(),
     description: $('#description').value.trim(),
     priority: $('#priority').value,
@@ -586,10 +563,12 @@ $('#taskForm').addEventListener('submit', async e=>{
     assignee: $('#assignee').value.trim(),
   };
   if(!payload.title) return alert('Informe um título');
-  if(id) await updateTask(id, payload);
-  else await saveTask(payload);
-  state.tasks = await loadTasks();
-  render();
+  if(id){
+    state.tasks = state.tasks.map(t=>t.id===id?payload:t);
+  } else {
+    state.tasks.push(payload);
+  }
+  saveAndRender();
   closeModal();
 });
 
@@ -597,24 +576,29 @@ $('#taskForm').addEventListener('submit', async e=>{
 $('#search').addEventListener('input', render);
 $('#priorityFilter').addEventListener('change', render);
 $('#dueFilter').addEventListener('change', render);
-$('#clearFilters').addEventListener('click', ()=>{ $('#search').value=''; $('#priorityFilter').value=''; $('#dueFilter').value=''; render(); });
+$('#clearFilters').addEventListener('click', ()=>{
+  $('#search').value=''; $('#priorityFilter').value=''; $('#dueFilter').value=''; render();
+});
 
-// ---------- Dropzones ----------
+// ---------- Drag & Drop ----------
 $$('.dropzone').forEach(z=>{
   z.addEventListener('dragover', e=>{ e.preventDefault(); z.classList.add('dragover'); });
   z.addEventListener('dragleave', ()=> z.classList.remove('dragover'));
-  z.addEventListener('drop', async e=>{
+  z.addEventListener('drop', e=>{
     e.preventDefault();
     z.classList.remove('dragover');
     const id = e.dataTransfer.getData('id');
-    await updateTask(id, { status: z.dataset.zone });
-    state.tasks = await loadTasks();
-    render();
+    const task = state.tasks.find(t=>t.id===id);
+    if(task){ task.status = z.dataset.zone; saveAndRender(); }
   });
 });
 
+function labelPriority(p){ return p==='alta'?'Alta':p==='baixa'?'Baixa':'Média'; }
+function priorityClass(p){ return p==='alta'?'danger':p==='baixa'?'success':'warn'; }
+function dueTagClass(d){ const t=new Date().toISOString().slice(0,10); if(!d)return''; if(d<t)return'danger'; if(d===t)return'warn'; return'success'; }
+function formatDate(d){ const [y,m,dd]=d.split('-'); return `${dd}/${m}/${y}`; }
+
 init();
 </script>
-
 </body>
 </html>
