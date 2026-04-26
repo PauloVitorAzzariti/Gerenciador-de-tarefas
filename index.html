@@ -33,6 +33,691 @@
   .app {
     display: grid;
     grid-template-columns: 260px 1fr;
+    grid-template-rows: 64px auto 1fr;
+    gap: 16px;
+    padding: 16px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  header {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 12px;
+    box-shadow: var(--shadow);
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:8px 10px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(124,92,255,.25), rgba(91,61,247,.15));
+    border: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  .logo .dot{ width: 10px; height: 10px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 20px var(--primary); }
+  .logo span{ font-weight: 700; letter-spacing:.3px; }
+
+  .search {
+    flex:1;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:#0d1122;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding: 8px 12px;
+    min-width: 160px;
+  }
+  .search input{
+    flex:1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #e7e9ee;
+    font-size: 14px;
+  }
+
+  .toolbar {
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    cursor:pointer;
+    border:1px solid var(--border);
+    background: #0d1122;
+    color:#e7e9ee;
+    padding:10px 12px;
+    border-radius:12px;
+    font-weight:600;
+    transition: transform .06s ease, background .2s ease, border .2s ease;
+    white-space: nowrap;
+  }
+  .btn:hover{ background:#131735; }
+  .btn:active{ transform: translateY(1px); }
+  .btn.primary{
+    background: linear-gradient(135deg, var(--primary), var(--primary-2));
+    border-color: transparent;
+  }
+
+  aside {
+    background: var(--panel);
+    border:1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px;
+    box-shadow: var(--shadow);
+    grid-row: 3;
+    grid-column: 1;
+  }
+
+  .aside-section{
+    padding:10px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:#0d1122;
+    margin-bottom:10px;
+  }
+  .aside-section h4{
+    margin: 0 0 8px 0;
+    font-size: 13px;
+    color: var(--muted);
+    font-weight:700;
+    letter-spacing:.4px;
+    text-transform:uppercase;
+  }
+
+  .stats{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:10px;
+  }
+  .stat{
+    background: linear-gradient(180deg, rgba(124,92,255,.12), rgba(124,92,255,.02));
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:10px;
+  }
+  .stat b{ font-size: 22px; }
+
+  /* -------- Abas de clientes -------- */
+  .clients-tabs {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    overflow-x: auto;
+    padding: 0 4px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 12px;
+  }
+
+  .client-tab {
+    cursor: pointer;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    background: #0d1122;
+    color: #e7e9ee;
+    border-radius: 10px;
+    white-space: nowrap;
+    font-weight: 600;
+    font-size: 13px;
+    transition: background .2s ease, border-color .2s ease;
+    flex-shrink: 0;
+  }
+
+  .client-tab:hover {
+    background: #131735;
+  }
+
+  .client-tab.active {
+    background: linear-gradient(135deg, var(--primary), var(--primary-2));
+    border-color: transparent;
+    box-shadow: 0 0 15px rgba(124,92,255,.3);
+  }
+
+  .client-tab.add-client {
+    background: #0d1122;
+    border: 1px dashed var(--border);
+    color: var(--primary);
+    margin-left: auto;
+  }
+
+  .client-tab.add-client:hover {
+    background: rgba(124,92,255,.1);
+  }
+
+  main{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    grid-row: 3;
+    grid-column: 2 / -1;
+  }
+
+  .column{
+    background: var(--panel);
+    border:1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px;
+    box-shadow: var(--shadow);
+    display:flex;
+    flex-direction:column;
+    min-height: 60vh;
+  }
+
+  .column h3{
+    margin: 0 0 8px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    font-size: 15px;
+    letter-spacing:.3px;
+  }
+  .column h3 span{ color: var(--muted); font-weight:600; font-size: 12px; }
+
+  .dropzone{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
+    padding: 6px;
+    border-radius: 12px;
+    background: repeating-linear-gradient(45deg, #0b0f1f, #0b0f1f 10px, #0d1122 10px, #0d1122 20px);
+    border:1px dashed var(--border);
+    transition: background .2s ease, border-color .2s ease;
+  }
+  .dropzone.dragover{ background: rgba(124,92,255,.08); border-color: var(--primary); }
+
+  .card{
+    user-select:none;
+    background:#0b0f1f;
+    border:1px solid var(--border);
+    border-radius: 14px;
+    padding: 12px;
+    display:flex;
+    flex-direction:column;
+    gap: 8px;
+    box-shadow: var(--shadow);
+    cursor: grab;
+  }
+  .card .title{ font-weight:700; font-size: 14px; }
+  .card .meta{ display:flex; align-items:center; gap:8px; color: var(--muted); font-size: 12px; flex-wrap: wrap; }
+
+  .tag{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    border:1px solid var(--border);
+    padding:6px 8px;
+    border-radius:999px;
+    font-size:11px;
+    background:#0f152e;
+  }
+  .tag.success{ color: var(--success); }
+  .tag.warn{ color: var(--warning); }
+  .tag.danger{ color: var(--danger); }
+
+  .actions{ display:flex; justify-content:space-between; align-items:center; margin-top: 2px; }
+  .icon-btn{
+    cursor:pointer;
+    background:transparent;
+    border:1px solid var(--border);
+    padding: 6px 8px;
+    border-radius: 8px;
+    color:#cbd1de;
+    font-size:12px;
+  }
+  .icon-btn:hover{ background:#141936; }
+
+  .empty{
+    opacity:.65;
+    text-align:center;
+    padding: 20px;
+    border:1px dashed var(--border);
+    border-radius:12px;
+    font-size: 13px;
+  }
+
+  /* -------- Modal -------- */
+  .modal{
+    position: fixed;
+    inset: 0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    background: rgba(0,0,0,.55);
+    padding: 20px;
+    z-index: 1000;
+  }
+  .modal.open{ display:flex; }
+  .modal .content{
+    width: 100%;
+    max-width: 520px;
+    background: var(--panel);
+    border:1px solid var(--border);
+    border-radius: 16px;
+    padding: 14px;
+    box-shadow: var(--shadow);
+  }
+  .modal .content h3{ margin: 4px 0 10px; }
+  .field{ display:grid; gap:6px; margin-bottom:10px; }
+  .field label{ font-size: 13px; color: var(--muted); }
+  .field input, .field textarea, .field select{
+    width:100%;
+    background:#0b0f1f;
+    border:1px solid var(--border);
+    color:#e7e9ee;
+    padding:10px 12px;
+    border-radius:10px;
+  }
+  .row{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
+
+  @media (max-width: 1024px){
+    .app{ grid-template-columns: 1fr; }
+    aside{ grid-row: auto; grid-column: auto; }
+    main{ grid-column: auto; grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 768px){
+    main{ grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="logo" title="Painel de Tarefas">
+        <div class="dot"></div>
+        <span>TaskFlow</span>
+      </div>
+      <div class="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 19a8 8 0 1 1 0-16 8 8 0 0 1 0 16Zm10 1-4.35-4.35" stroke="#9aa3b2" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Buscar tarefas..." />
+      </div>
+      <div class="toolbar">
+        <select id="priorityFilter" class="btn">
+          <option value="">Prioridade: Todas</option>
+          <option value="alta">Alta</option>
+          <option value="media">Média</option>
+          <option value="baixa">Baixa</option>
+        </select>
+        <button class="btn" id="clearFilters">Limpar</button>
+        <button class="btn primary" id="addTaskBtn">+ Nova Tarefa</button>
+      </div>
+    </header>
+
+    <div class="clients-tabs" id="clientsTabs">
+      <button class="client-tab active" data-client="">Todos os Clientes</button>
+      <button class="client-tab add-client" id="addClientBtn">+ Novo Cliente</button>
+    </div>
+
+    <aside>
+      <div class="aside-section">
+        <h4>Resumo</h4>
+        <div class="stats">
+          <div class="stat"><div>Tarefas</div><b id="stat-total">0</b></div>
+          <div class="stat"><div>Concluídas</div><b id="stat-done">0</b></div>
+        </div>
+      </div>
+      <div class="aside-section">
+        <h4>Dicas</h4>
+        <small>✨ Arraste cartões entre colunas<br>✏️ Clique em editar para alterar<br>🗑️ Clique em excluir para remover<br>💾 Tudo salvo no navegador</small>
+      </div>
+    </aside>
+
+    <main>
+      <section class="column" data-status="todo">
+        <h3>A fazer <span id="count-todo">0</span></h3>
+        <div class="dropzone" data-zone="todo"></div>
+      </section>
+      <section class="column" data-status="doing">
+        <h3>Em progresso <span id="count-doing">0</span></h3>
+        <div class="dropzone" data-zone="doing"></div>
+      </section>
+      <section class="column" data-status="done">
+        <h3>Concluído <span id="count-done">0</span></h3>
+        <div class="dropzone" data-zone="done"></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal" id="taskModal">
+    <div class="content">
+      <h3 id="modalTitle">Nova tarefa</h3>
+      <form id="taskForm">
+        <input type="hidden" id="taskId" />
+        <div class="field">
+          <label for="title">Título *</label>
+          <input id="title" required placeholder="Preparar apresentação" />
+        </div>
+        <div class="field">
+          <label for="description">Descrição</label>
+          <textarea id="description" rows="3" placeholder="Detalhes..."></textarea>
+        </div>
+        <div class="field">
+          <label for="client">Cliente *</label>
+          <select id="client" required>
+            <option value="">Selecione um cliente...</option>
+          </select>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="priority">Prioridade</label>
+            <select id="priority">
+              <option value="alta">Alta</option>
+              <option value="media" selected>Média</option>
+              <option value="baixa">Baixa</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="dueDate">Prazo</label>
+            <input id="dueDate" type="date" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="status">Status</label>
+            <select id="status">
+              <option value="todo">A fazer</option>
+              <option value="doing">Em progresso</option>
+              <option value="done">Concluído</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="assignee">Responsável</label>
+            <input id="assignee" placeholder="Quem vai fazer?" />
+          </div>
+        </div>
+        <div style="display:flex; gap:8px; justify-content:flex-end; margin-top:6px;">
+          <button type="button" class="btn">Cancelar</button>
+          <button type="submit" class="btn primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="clientModal">
+    <div class="content">
+      <h3>Novo Cliente</h3>
+      <form id="clientForm">
+        <div class="field">
+          <label for="clientName">Nome do Cliente *</label>
+          <input id="clientName" required placeholder="Ex.: Empresa XYZ" />
+        </div>
+        <div style="display:flex; gap:8px; justify-content:flex-end; margin-top:6px;">
+          <button type="button" class="btn">Cancelar</button>
+          <button type="submit" class="btn primary">Criar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+let state = { tasks: [], clients: [], selectedClient: '' };
+
+function loadData() {
+  state.tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+  state.clients = JSON.parse(localStorage.getItem('clients') || '[]');
+  state.selectedClient = localStorage.getItem('selectedClient') || '';
+}
+
+function saveData() {
+  localStorage.setItem('tasks', JSON.stringify(state.tasks));
+  localStorage.setItem('clients', JSON.stringify(state.clients));
+  localStorage.setItem('selectedClient', state.selectedClient);
+}
+
+function addClient(name) {
+  const client = { id: Date.now().toString(), name: name.trim() };
+  state.clients.push(client);
+  saveData();
+  refreshUI();
+}
+
+function refreshUI() {
+  renderTabs();
+  renderSelect();
+  render();
+}
+
+function renderTabs() {
+  const container = document.getElementById('clientsTabs');
+  container.innerHTML = `<button class="client-tab ${!state.selectedClient ? 'active' : ''}" data-client="">Todos os Clientes</button>`;
+  
+  state.clients.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className = 'client-tab' + (c.id === state.selectedClient ? ' active' : '');
+    btn.dataset.client = c.id;
+    btn.textContent = c.name;
+    container.appendChild(btn);
+  });
+
+  const addBtn = document.createElement('button');
+  addBtn.className = 'client-tab add-client';
+  addBtn.id = 'addClientBtn';
+  addBtn.textContent = '+ Novo Cliente';
+  container.appendChild(addBtn);
+}
+
+function renderSelect() {
+  const sel = document.getElementById('client');
+  sel.innerHTML = '<option value="">Selecione um cliente...</option>';
+  state.clients.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c.id;
+    opt.textContent = c.name;
+    sel.appendChild(opt);
+  });
+}
+
+function render() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const p = document.getElementById('priorityFilter').value;
+  
+  let tasks = state.tasks.filter(t => {
+    let ok = true;
+    if(q) ok = t.title.toLowerCase().includes(q) || (t.description || '').toLowerCase().includes(q);
+    if(p) ok = ok && t.priority === p;
+    if(state.selectedClient) ok = ok && t.client === state.selectedClient;
+    return ok;
+  });
+
+  const zones = ['todo', 'doing', 'done'];
+  zones.forEach(z => {
+    const el = document.querySelector(`[data-zone="${z}"]`);
+    el.innerHTML = '';
+    const zTasks = tasks.filter(t => t.status === z);
+    if(zTasks.length === 0) {
+      el.innerHTML = '<div class="empty">Sem tarefas</div>';
+    } else {
+      zTasks.forEach(t => el.appendChild(createCard(t)));
+    }
+  });
+
+  document.getElementById('count-todo').textContent = tasks.filter(t => t.status === 'todo').length;
+  document.getElementById('count-doing').textContent = tasks.filter(t => t.status === 'doing').length;
+  document.getElementById('count-done').textContent = tasks.filter(t => t.status === 'done').length;
+  document.getElementById('stat-total').textContent = state.tasks.length;
+  document.getElementById('stat-done').textContent = state.tasks.filter(t => t.status === 'done').length;
+}
+
+function createCard(t) {
+  const el = document.createElement('article');
+  el.className = 'card';
+  el.draggable = true;
+  el.dataset.id = t.id;
+  el.innerHTML = `
+    <div class="title">${t.title}</div>
+    ${t.description ? `<div style="font-size:12px">${t.description}</div>` : ''}
+    <div class="meta">
+      <span class="tag ${t.priority === 'alta' ? 'danger' : t.priority === 'baixa' ? 'success' : 'warn'}">${t.priority}</span>
+      ${t.dueDate ? `<span class="tag">📅 ${t.dueDate}</span>` : ''}
+      ${t.assignee ? `<span class="tag">👤 ${t.assignee}</span>` : ''}
+    </div>
+    <div class="actions">
+      <button class="icon-btn" data-action="done">✔ Concluir</button>
+      <div style="display:flex;gap:6px">
+        <button class="icon-btn" data-action="edit">✎ Editar</button>
+        <button class="icon-btn" data-action="del">🗑 Excluir</button>
+      </div>
+    </div>`;
+
+  el.addEventListener('click', e => {
+    const btn = e.target.closest('button');
+    if(!btn) return;
+    if(btn.dataset.action === 'done') { t.status = 'done'; saveData(); render(); }
+    if(btn.dataset.action === 'edit') { editTask(t); }
+    if(btn.dataset.action === 'del') { state.tasks = state.tasks.filter(x => x.id !== t.id); saveData(); render(); }
+  });
+
+  el.addEventListener('dragstart', e => { e.dataTransfer.setData('id', t.id); });
+  return el;
+}
+
+function editTask(t) {
+  document.getElementById('modalTitle').textContent = 'Editar tarefa';
+  document.getElementById('taskId').value = t.id;
+  document.getElementById('title').value = t.title;
+  document.getElementById('description').value = t.description;
+  document.getElementById('client').value = t.client;
+  document.getElementById('priority').value = t.priority;
+  document.getElementById('dueDate').value = t.dueDate;
+  document.getElementById('status').value = t.status;
+  document.getElementById('assignee').value = t.assignee;
+  document.getElementById('taskModal').classList.add('open');
+}
+
+// Event Listeners
+document.getElementById('addTaskBtn').addEventListener('click', () => {
+  document.getElementById('taskId').value = '';
+  document.getElementById('taskForm').reset();
+  document.getElementById('modalTitle').textContent = 'Nova tarefa';
+  document.getElementById('taskModal').classList.add('open');
+});
+
+document.getElementById('taskForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const id = document.getElementById('taskId').value;
+  const clientId = document.getElementById('client').value;
+  if(!clientId) { alert('Selecione um cliente'); return; }
+  
+  const task = {
+    id: id || Date.now().toString(),
+    title: document.getElementById('title').value,
+    description: document.getElementById('description').value,
+    priority: document.getElementById('priority').value,
+    dueDate: document.getElementById('dueDate').value,
+    status: document.getElementById('status').value,
+    assignee: document.getElementById('assignee').value,
+    client: clientId
+  };
+  
+  if(id) {
+    state.tasks = state.tasks.map(t => t.id === id ? task : t);
+  } else {
+    state.tasks.push(task);
+  }
+  saveData();
+  render();
+  document.getElementById('taskModal').classList.remove('open');
+});
+
+document.getElementById('clearFilters').addEventListener('click', () => {
+  document.getElementById('search').value = '';
+  document.getElementById('priorityFilter').value = '';
+  render();
+});
+
+document.getElementById('search').addEventListener('input', render);
+document.getElementById('priorityFilter').addEventListener('change', render);
+
+document.querySelectorAll('.dropzone').forEach(z => {
+  z.addEventListener('dragover', e => { e.preventDefault(); z.classList.add('dragover'); });
+  z.addEventListener('dragleave', () => z.classList.remove('dragover'));
+  z.addEventListener('drop', e => {
+    e.preventDefault();
+    z.classList.remove('dragover');
+    const id = e.dataTransfer.getData('id');
+    const t = state.tasks.find(x => x.id === id);
+    if(t) { t.status = z.dataset.zone; saveData(); render(); }
+  });
+});
+
+document.getElementById('clientForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const name = document.getElementById('clientName').value;
+  if(!name) { alert('Informe o nome'); return; }
+  addClient(name);
+  document.getElementById('clientName').value = '';
+  document.getElementById('clientModal').classList.remove('open');
+});
+
+document.addEventListener('click', e => {
+  if(e.target.dataset.client !== undefined) {
+    state.selectedClient = e.target.dataset.client;
+    saveData();
+    refreshUI();
+  }
+  if(e.target.id === 'addClientBtn') {
+    document.getElementById('clientModal').classList.add('open');
+  }
+  if(e.target.textContent === 'Cancelar') {
+    document.querySelectorAll('.modal').forEach(m => m.classList.remove('open'));
+  }
+});
+
+loadData();
+refreshUI();
+  </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Painel • Gerenciador de Tarefas</title>
+  <style>
+  /* --------- Reset simples --------- */
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Ubuntu, Cantarell, Arial, sans-serif;
+    background: #0f1220;
+    color: #e7e9ee;
+  }
+
+  :root{
+    --bg: #0f1220;
+    --panel: #151a2d;
+    --muted: #9aa3b2;
+    --border: #232a46;
+    --primary: #7c5cff;
+    --primary-2: #5b3df7;
+    --success: #2ecc71;
+    --warning: #f1c40f;
+    --danger: #e74c3c;
+    --shadow: 0 10px 30px rgba(0,0,0,.35);
+    --radius: 16px;
+  }
+
+  /* --------- Layout base --------- */
+  .app {
+    display: grid;
+    grid-template-columns: 260px 1fr;
     grid-template-rows: 64px 1fr;
     gap: 16px;
     padding: 16px;
@@ -283,10 +968,86 @@
   }
   .row{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
 
+  /* -------- Abas de clientes -------- */
+  .clients-tabs {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    overflow-x: auto;
+    padding: 0 4px;
+  }
+
+  .client-tab {
+    cursor: pointer;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    background: #0d1122;
+    color: #e7e9ee;
+    border-radius: 10px;
+    white-space: nowrap;
+    font-weight: 600;
+    font-size: 13px;
+    transition: background .2s ease, border-color .2s ease;
+    flex-shrink: 0;
+  }
+
+  .client-tab:hover {
+    background: #131735;
+  }
+
+  .client-tab.active {
+    background: linear-gradient(135deg, var(--primary), var(--primary-2));
+    border-color: transparent;
+    box-shadow: 0 0 15px rgba(124,92,255,.3);
+  }
+
+  .client-tab.add-client {
+    background: #0d1122;
+    border: 1px dashed var(--border);
+    color: var(--primary);
+  }
+
+  .client-tab.add-client:hover {
+    background: rgba(124,92,255,.1);
+  }
+
+  /* -------- Visualização por cliente -------- */
+  .clients-view {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 16px;
+  }
+
+  .client-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px;
+    box-shadow: var(--shadow);
+  }
+
+  .client-card h3 {
+    margin: 0 0 12px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .client-card .task-stats {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
   /* -------- Responsivo -------- */
   @media (max-width: 1024px){
-    .app{ grid-template-columns: 1fr; grid-template-rows: auto auto auto; }
-    aside{ order: 2; }
+    .app{ grid-template-columns: 1fr; grid-template-rows: auto auto auto auto; }
+    aside{ order: 3; }
     main{ grid-template-columns: repeat(2, 1fr); }
   }
 
@@ -342,6 +1103,12 @@
       </div>
     </header>
 
+    <!-- Abas de Clientes -->
+    <div class="clients-tabs" id="clientsTabs">
+      <button class="client-tab active" data-client="">Todos os Clientes</button>
+      <button class="client-tab add-client" id="addClientBtn">+ Novo Cliente</button>
+    </div>
+
     <aside>
       <div class="aside-section">
         <h4>Resumo</h4>
@@ -394,6 +1161,12 @@
           <label for="description">Descrição</label>
           <textarea id="description" rows="3" placeholder="Detalhes, subtarefas ou links..."></textarea>
         </div>
+        <div class="field">
+          <label for="client">Cliente</label>
+          <select id="client" required>
+            <option value="">Selecione um cliente...</option>
+          </select>
+        </div>
         <div class="row">
           <div class="field">
             <label for="priority">Prioridade</label>
@@ -430,47 +1203,216 @@
     </div>
   </div>
 
-  <script>
-const $ = (sel, el=document) => el.querySelector(sel);
-const $$ = (sel, el=document) => Array.from(el.querySelectorAll(sel));
+  <!-- Modal de Novo Cliente -->
+  <div class="modal" id="clientModal" aria-hidden="true">
+    <div class="content">
+      <h3>Novo Cliente</h3>
+      <form id="clientForm">
+        <div class="field">
+          <label for="clientName">Nome do Cliente</label>
+          <input id="clientName" required maxlength="100" placeholder="Ex.: Empresa XYZ" />
+        </div>
+        <div style="display:flex; gap:8px; justify-content:flex-end; margin-top:6px;">
+          <button type="button" class="btn" id="cancelClientModal">Cancelar</button>
+          <button type="submit" class="btn primary">Criar</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-let state = { tasks: [] };
+  <script>
+let state = { tasks: [], clients: [], selectedClient: '' };
 
 // ---------- Armazenamento local ----------
-function loadTasks() {
-  return JSON.parse(localStorage.getItem('tasks') || '[]');
+function loadData() {
+  state.tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+  state.clients = JSON.parse(localStorage.getItem('clients') || '[]');
+  state.selectedClient = localStorage.getItem('selectedClient') || '';
 }
 
-function saveTasks(tasks) {
-  localStorage.setItem('tasks', JSON.stringify(tasks));
+function saveData() {
+  localStorage.setItem('tasks', JSON.stringify(state.tasks));
+  localStorage.setItem('clients', JSON.stringify(state.clients));
+  localStorage.setItem('selectedClient', state.selectedClient);
 }
 
 // ---------- Inicialização ----------
 function init() {
-  state.tasks = loadTasks();
+  loadData();
+  renderClientTabs();
+  updateClientSelect();
   render();
-  bindUI();
+  setupEventListeners();
+}
+
+// ---------- Setup de Event Listeners ----------
+function setupEventListeners() {
+  // Buttons principais
+  document.getElementById('addTaskBtn').addEventListener('click', () => openModal());
+  document.getElementById('clearFilters').addEventListener('click', () => {
+    document.getElementById('search').value = '';
+    document.getElementById('priorityFilter').value = '';
+    document.getElementById('dueFilter').value = '';
+    render();
+  });
+
+  // Filtros
+  document.getElementById('search').addEventListener('input', render);
+  document.getElementById('priorityFilter').addEventListener('change', render);
+  document.getElementById('dueFilter').addEventListener('change', render);
+
+  // Modal de tarefas
+  document.getElementById('cancelModal').addEventListener('click', closeModal);
+  document.getElementById('taskForm').addEventListener('submit', submitTaskForm);
+
+  // Modal de cliente
+  document.getElementById('cancelClientModal').addEventListener('click', closeClientModal);
+  document.getElementById('clientForm').addEventListener('submit', submitClientForm);
+
+  // Drag & Drop
+  document.querySelectorAll('.dropzone').forEach(z => {
+    z.addEventListener('dragover', e => { e.preventDefault(); z.classList.add('dragover'); });
+    z.addEventListener('dragleave', () => z.classList.remove('dragover'));
+    z.addEventListener('drop', e => {
+      e.preventDefault();
+      z.classList.remove('dragover');
+      const id = e.dataTransfer.getData('id');
+      const task = state.tasks.find(t => t.id === id);
+      if (task) { task.status = z.dataset.zone; saveAndRender(); }
+    });
+  });
+
+  // Client tabs e novo cliente button - usar event delegation
+  setupClientTabListeners();
+}
+
+function setupClientTabListeners() {
+  const clientsTab = document.getElementById('clientsTabs');
+  if (!clientsTab) return;
+
+  // Remover listeners antigos
+  clientsTab.querySelectorAll('.client-tab').forEach(tab => {
+    tab.replaceWith(tab.cloneNode(true));
+  });
+
+  // Adicionar listeners aos tabs
+  document.querySelectorAll('[data-client]').forEach(tab => {
+    tab.addEventListener('click', () => {
+      state.selectedClient = tab.dataset.client;
+      saveData();
+      renderClientTabs();
+      setupClientTabListeners();
+      render();
+    });
+  });
+
+  // Botão novo cliente
+  const addClientBtn = document.getElementById('addClientBtn');
+  if (addClientBtn) {
+    addClientBtn.replaceWith(addClientBtn.cloneNode(true));
+    document.getElementById('addClientBtn').addEventListener('click', () => {
+      document.getElementById('clientModal').classList.add('open');
+    });
+  }
+}
+
+// ---------- Gerenciar Clientes ----------
+function addClient(name) {
+  const newClient = {
+    id: Date.now().toString(),
+    name: name.trim(),
+    createdAt: new Date().toISOString()
+  };
+  state.clients.push(newClient);
+  saveData();
+  renderClientTabs();
+  updateClientSelect();
+  state.selectedClient = newClient.id;
+  saveData();
+  renderClientTabs();
+  render();
+}
+
+function renderClientTabs() {
+  const container = document.getElementById('clientsTabs');
+  container.innerHTML = '<button class="client-tab" data-client="">Todos os Clientes</button>';
+  
+  state.clients.forEach(c => {
+    const tab = document.createElement('button');
+    tab.className = 'client-tab';
+    if (c.id === state.selectedClient) tab.classList.add('active');
+    tab.dataset.client = c.id;
+    tab.textContent = c.name;
+    container.appendChild(tab);
+  });
+
+  const addBtn = document.createElement('button');
+  addBtn.className = 'client-tab add-client';
+  addBtn.id = 'addClientBtn';
+  addBtn.textContent = '+ Novo Cliente';
+  container.appendChild(addBtn);
+
+  // Atualizar active state
+  document.querySelectorAll('[data-client]').forEach(tab => {
+    if (tab.dataset.client === state.selectedClient || (tab.dataset.client === '' && !state.selectedClient)) {
+      tab.classList.add('active');
+    } else {
+      tab.classList.remove('active');
+    }
+  });
+}
+
+function updateClientSelect() {
+  const select = document.getElementById('client');
+  select.innerHTML = '<option value="">Selecione um cliente...</option>';
+  state.clients.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c.id;
+    opt.textContent = c.name;
+    select.appendChild(opt);
+  });
 }
 
 // ---------- Renderização ----------
 function render() {
-  const q = $('#search').value.trim().toLowerCase();
-  const pf = $('#priorityFilter').value;
-  const dueF = $('#dueFilter').value;
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  const pf = document.getElementById('priorityFilter').value;
+  const dueF = document.getElementById('dueFilter').value;
 
-  const filtered = state.tasks.filter(t => {
+  let filtered = state.tasks.filter(t => {
     const matchesText = !q || t.title.toLowerCase().includes(q) || (t.description||'').toLowerCase().includes(q);
     const matchesPriority = !pf || t.priority === pf;
     const matchesDue = !dueF || t.dueDate === dueF;
     return matchesText && matchesPriority && matchesDue;
   });
 
-  const zones = { todo: $('[data-zone="todo"]'), doing: $('[data-zone="doing"]'), done: $('[data-zone="done"]') };
+  // Se um cliente específico está selecionado, mostrar kanban
+  if (state.selectedClient) {
+    filtered = filtered.filter(t => t.client === state.selectedClient);
+    renderKanban(filtered);
+  } else {
+    // Mostrar por cliente
+    renderAllClientsView(filtered);
+  }
+}
+
+function renderKanban(tasks) {
+  const main = document.querySelector('main');
+  main.className = '';
+  main.style.display = 'grid';
+  main.style.gridTemplateColumns = 'repeat(3, 1fr)';
+  main.style.gap = '16px';
+  
+  const zones = { 
+    todo: document.querySelector('[data-zone="todo"]'), 
+    doing: document.querySelector('[data-zone="doing"]'), 
+    done: document.querySelector('[data-zone="done"]') 
+  };
   Object.values(zones).forEach(z => z.innerHTML = '');
 
   const counts = { todo:0, doing:0, done:0 };
 
-  filtered.forEach(t => {
+  tasks.forEach(t => {
     const card = createCard(t);
     zones[t.status]?.appendChild(card);
     counts[t.status]++;
@@ -485,14 +1427,87 @@ function render() {
     }
   });
 
-  $('#count-todo').textContent = counts.todo;
-  $('#count-doing').textContent = counts.doing;
-  $('#count-done').textContent = counts.done;
-  $('#stat-total').textContent = state.tasks.length;
-  $('#stat-done').textContent = state.tasks.filter(t=>t.status==='done').length;
+  document.getElementById('count-todo').textContent = counts.todo;
+  document.getElementById('count-doing').textContent = counts.doing;
+  document.getElementById('count-done').textContent = counts.done;
+  
+  const clientTasks = state.tasks.filter(t => t.client === state.selectedClient);
+  document.getElementById('stat-total').textContent = clientTasks.length;
+  document.getElementById('stat-done').textContent = clientTasks.filter(t=>t.status==='done').length;
+  
+  document.querySelectorAll('[data-zone]').forEach(z => z.style.display = '');
+  document.querySelector('main')?.querySelector('h3')?.parentElement.style.display = '';
 }
 
-// ---------- Criar/editar/excluir ----------
+function renderAllClientsView(tasks) {
+  const main = document.querySelector('main');
+  main.className = 'clients-view';
+  main.style.display = 'grid';
+  main.style.gridTemplateColumns = 'repeat(auto-fit, minmax(350px, 1fr))';
+  main.style.gap = '16px';
+  main.innerHTML = '';
+
+  document.querySelectorAll('[data-zone]').forEach(z => z.style.display = 'none');
+  document.querySelectorAll('.column h3').forEach(h => h.parentElement.style.display = 'none');
+
+  if (state.clients.length === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'empty';
+    empty.style.gridColumn = '1 / -1';
+    empty.innerHTML = 'Nenhum cliente cadastrado. Crie um novo cliente para começar!';
+    main.appendChild(empty);
+    document.getElementById('stat-total').textContent = '0';
+    document.getElementById('stat-done').textContent = '0';
+    return;
+  }
+
+  state.clients.forEach(client => {
+    const clientTasks = tasks.filter(t => t.client === client.id);
+    
+    const card = document.createElement('div');
+    card.className = 'client-card';
+    
+    const done = clientTasks.filter(t => t.status === 'done').length;
+    const taskStats = document.createElement('div');
+    taskStats.className = 'task-stats';
+    taskStats.innerHTML = `
+      <span>📋 Total: ${clientTasks.length}</span>
+      <span>✅ Concluídas: ${done}</span>
+      <span>⏳ Em progresso: ${clientTasks.filter(t => t.status === 'doing').length}</span>
+    `;
+    
+    const header = document.createElement('h3');
+    header.innerHTML = `<span>${client.name}</span>`;
+    
+    const taskContainer = document.createElement('div');
+    taskContainer.style.display = 'flex';
+    taskContainer.style.flexDirection = 'column';
+    taskContainer.style.gap = '8px';
+    
+    if (clientTasks.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'empty';
+      empty.style.padding = '10px';
+      empty.innerHTML = 'Sem tarefas';
+      taskContainer.appendChild(empty);
+    } else {
+      clientTasks.forEach(t => {
+        const cardEl = createMiniCard(t);
+        taskContainer.appendChild(cardEl);
+      });
+    }
+    
+    card.appendChild(header);
+    card.appendChild(taskStats);
+    card.appendChild(taskContainer);
+    main.appendChild(card);
+  });
+
+  document.getElementById('stat-total').textContent = state.tasks.length;
+  document.getElementById('stat-done').textContent = state.tasks.filter(t=>t.status==='done').length;
+}
+
+// ---------- Criar cartões ----------
 function createCard(t){
   const el = document.createElement('article');
   el.className = 'card';
@@ -528,39 +1543,59 @@ function createCard(t){
   return el;
 }
 
+function createMiniCard(t){
+  const el = document.createElement('div');
+  el.className = 'card';
+  el.style.paddingBottom = '6px';
+  el.innerHTML = `
+    <div class="title" style="margin-bottom: 4px;">${t.title}</div>
+    <div class="meta">
+      <span class="tag ${priorityClass(t.priority)}">${labelPriority(t.priority)}</span>
+      <span class="tag">${t.status === 'done' ? '✅' : t.status === 'doing' ? '⏳' : '📝'} ${labelStatus(t.status)}</span>
+    </div>`;
+  
+  el.addEventListener("click", ()=> openModal(t));
+  return el;
+}
+
 function saveAndRender(){
-  saveTasks(state.tasks);
+  saveData();
   render();
 }
 
-// ---------- Modal ----------
+// ---------- Modal de Tarefas ----------
 function openModal(task=null){
-  $('#taskModal').classList.add('open');
-  $('#modalTitle').textContent = task ? 'Editar tarefa' : 'Nova tarefa';
-  $('#taskId').value = task?.id || '';
-  $('#title').value = task?.title || '';
-  $('#description').value = task?.description || '';
-  $('#priority').value = task?.priority || 'media';
-  $('#dueDate').value = task?.dueDate || '';
-  $('#status').value = task?.status || 'todo';
-  $('#assignee').value = task?.assignee || '';
+  document.getElementById('taskModal').classList.add('open');
+  document.getElementById('modalTitle').textContent = task ? 'Editar tarefa' : 'Nova tarefa';
+  document.getElementById('taskId').value = task?.id || '';
+  document.getElementById('title').value = task?.title || '';
+  document.getElementById('description').value = task?.description || '';
+  document.getElementById('client').value = task?.client || state.selectedClient || '';
+  document.getElementById('priority').value = task?.priority || 'media';
+  document.getElementById('dueDate').value = task?.dueDate || '';
+  document.getElementById('status').value = task?.status || 'todo';
+  document.getElementById('assignee').value = task?.assignee || '';
 }
-function closeModal(){ $('#taskModal').classList.remove('open'); }
 
-$('#addTaskBtn').addEventListener('click', ()=> openModal());
-$('#cancelModal').addEventListener('click', closeModal);
+function closeModal(){ 
+  document.getElementById('taskModal').classList.remove('open'); 
+}
 
-$('#taskForm').addEventListener('submit', e=>{
+function submitTaskForm(e) {
   e.preventDefault();
-  const id = $('#taskId').value;
+  const id = document.getElementById('taskId').value;
+  const clientId = document.getElementById('client').value;
+  if(!clientId) return alert('Selecione um cliente');
+  
   const payload = {
     id: id || Date.now().toString(),
-    title: $('#title').value.trim(),
-    description: $('#description').value.trim(),
-    priority: $('#priority').value,
-    dueDate: $('#dueDate').value,
-    status: $('#status').value,
-    assignee: $('#assignee').value.trim(),
+    title: document.getElementById('title').value.trim(),
+    description: document.getElementById('description').value.trim(),
+    priority: document.getElementById('priority').value,
+    dueDate: document.getElementById('dueDate').value,
+    status: document.getElementById('status').value,
+    assignee: document.getElementById('assignee').value.trim(),
+    client: clientId,
   };
   if(!payload.title) return alert('Informe um título');
   if(id){
@@ -570,30 +1605,25 @@ $('#taskForm').addEventListener('submit', e=>{
   }
   saveAndRender();
   closeModal();
-});
+}
 
-// ---------- Filtros ----------
-$('#search').addEventListener('input', render);
-$('#priorityFilter').addEventListener('change', render);
-$('#dueFilter').addEventListener('change', render);
-$('#clearFilters').addEventListener('click', ()=>{
-  $('#search').value=''; $('#priorityFilter').value=''; $('#dueFilter').value=''; render();
-});
+// ---------- Modal de Cliente ----------
+function closeClientModal() {
+  document.getElementById('clientModal').classList.remove('open');
+}
 
-// ---------- Drag & Drop ----------
-$$('.dropzone').forEach(z=>{
-  z.addEventListener('dragover', e=>{ e.preventDefault(); z.classList.add('dragover'); });
-  z.addEventListener('dragleave', ()=> z.classList.remove('dragover'));
-  z.addEventListener('drop', e=>{
-    e.preventDefault();
-    z.classList.remove('dragover');
-    const id = e.dataTransfer.getData('id');
-    const task = state.tasks.find(t=>t.id===id);
-    if(task){ task.status = z.dataset.zone; saveAndRender(); }
-  });
-});
+function submitClientForm(e){
+  e.preventDefault();
+  const name = document.getElementById('clientName').value.trim();
+  if(!name) return alert('Informe um nome para o cliente');
+  addClient(name);
+  document.getElementById('clientName').value = '';
+  closeClientModal();
+}
 
+// ---------- Utilitários ----------
 function labelPriority(p){ return p==='alta'?'Alta':p==='baixa'?'Baixa':'Média'; }
+function labelStatus(s){ return s==='todo'?'A fazer':s==='doing'?'Em progresso':'Concluído'; }
 function priorityClass(p){ return p==='alta'?'danger':p==='baixa'?'success':'warn'; }
 function dueTagClass(d){ const t=new Date().toISOString().slice(0,10); if(!d)return''; if(d<t)return'danger'; if(d===t)return'warn'; return'success'; }
 function formatDate(d){ const [y,m,dd]=d.split('-'); return `${dd}/${m}/${y}`; }
